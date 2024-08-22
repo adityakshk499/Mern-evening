@@ -1,6 +1,33 @@
 import React from "react";
+import { useState } from "react";
 
 const SignIn = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  console.log(formData);
+
+  function handleChange(event) {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    const data = await fetch("http://localhost:3001/api/v1/createuser", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    const response = await data.json();
+
+    console.log(response);
+  }
+
   return (
     <>
       {/* source:https://codepen.io/owaiswiz/pen/jOPvEPB */}
@@ -11,23 +38,35 @@ const SignIn = () => {
               <h1 className="text-2xl xl:text-3xl font-extrabold">Sign up</h1>
               <div className="w-full flex-1 mt-8">
                 <div className="my-12 border-b text-center"></div>
-                <div className="mx-auto max-w-xs">
+                <form onSubmit={handleSubmit} className="mx-auto max-w-xs">
                   <input
                     className="w-full mb-5 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                     type="text"
                     placeholder="Name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                     type="email"
                     placeholder="Email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     type="password"
                     placeholder="Password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
                   />
-                  <button className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                  <button
+                    type="submit"
+                    className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                  >
                     <svg
                       className="w-6 h-6 -ml-2"
                       fill="none"
@@ -42,7 +81,7 @@ const SignIn = () => {
                     </svg>
                     <span className="ml-3">Sign Up</span>
                   </button>
-                </div>
+                </form>
               </div>
             </div>
           </div>
