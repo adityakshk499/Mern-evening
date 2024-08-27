@@ -79,7 +79,7 @@ const Card = ({ item, checker }) => {
         &#x24;
         {checker === "top10"
           ? Math.round(item.data.price * 1000) / 1000
-          : item.current_price}
+          : Math.round(item.current_price * 1000) / 1000}
       </h3>
       <div>
         <div>

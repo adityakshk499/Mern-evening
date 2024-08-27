@@ -1,12 +1,19 @@
 import React from "react";
 import { useState } from "react";
-
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setuser } from "../store/userSlice";
 const SignIn = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   console.log(formData);
 
@@ -26,11 +33,17 @@ const SignIn = () => {
     const response = await data.json();
 
     console.log(response);
+    if (response.status === false) {
+      toast.error(response.message, { duration: 3000 });
+    } else if (response.status) {
+      dispatch(setuser(response.message));
+      navigate("/trending");
+    }
   }
 
   return (
     <>
-      {/* source:https://codepen.io/owaiswiz/pen/jOPvEPB */}
+      <Toaster position="bottom-center" reverseOrder={false} />
       <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
         <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
           <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">

@@ -20,10 +20,10 @@ router.post("/login", async (req, res) => {
     if (checkPassword) {
       return res.json({
         status: "true",
-        message: "User is logged in successfully",
+        message: "logged in",
       });
     } else {
-      return res.json({ status: "false", message: "Incorrect password" }); // Incorrect password
+      return res.json({ status: false, message: "Incorrect password" }); // Incorrect password
     }
   }
 });
@@ -45,7 +45,7 @@ router.post("/createuser", async (req, res) => {
 
     return res.json({
       status: true,
-      message: "User created successfully",
+      message: "logged in",
     });
   }
 });

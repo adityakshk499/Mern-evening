@@ -15,6 +15,7 @@ import { Provider } from "react-redux";
 import { cryptoStore } from "./store/cryptoStore";
 import SignIn from "./pages/SignIn";
 import Login from "./pages/Login";
+import { NotFound } from "./pages/NotFound";
 
 export const Name = createContext();
 
@@ -25,7 +26,7 @@ const Applayout = () => {
         <Name.Provider value={"aditya"}>
           <Navbar />
           <Outlet />
-          <Footer />
+          {/* <Footer /> */}
         </Name.Provider>
       </div>
     </Provider>
@@ -43,6 +44,7 @@ const browserRouter = createBrowserRouter([
       { path: "/coin/:id", element: <CoinByIdData /> },
       { path: "/signin", element: <SignIn /> },
       { path: "/login", element: <Login /> },
+      { path: "*", element: <NotFound /> },
     ],
     errorElement: <ErrorElement />,
   },
